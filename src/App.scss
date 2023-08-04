@@ -2,9 +2,16 @@
 @import '@radix-ui/colors/gray.css';
 @import '@radix-ui/colors/blue.css';
 
-.calendar-grid {
+$cell-padding: 24px;
+
+.calendar-weekdays-spacing {
   display: grid;
-  grid-template-columns: minmax(20px, auto) repeat(7, 1fr);
+  grid-template-columns: repeat(7, minmax(80px, 1fr));
+}
+
+.calendar-grid-spacing {
+  display: grid;
+  grid-template-columns: minmax(auto, 80px) 1fr;
 }
 
 .calendar-header {
@@ -21,5 +28,77 @@
 
   &:hover {
     background-color: var(--blue-3);
+  }
+}
+
+.calendar-container {
+  flex-grow: 1;
+
+  display: flex;
+  flex-direction: column;
+}
+
+.timeline {
+  padding: 24px;
+}
+
+.scrollable-x {
+  overflow-x: auto;
+  overflow-y: hidden;
+}
+.scrollable-y {
+  height: 0px;
+  flex-grow: 1;
+  overflow-y: auto;
+}
+
+.no-scroll {
+  overflow: hidden;
+}
+
+.grid-header {
+  @extend .calendar-weekdays-spacing;
+
+  .weekday {
+    @extend .d-flex;
+    flex-direction: column;
+    font-weight: 500;
+    color: var(--gray-9);
+    gap: 8px;
+    border-bottom: 1px solid var(--gray-6);
+
+    .day {
+      font-size: 1.2rem;
+      text-transform: uppercase;
+    }
+
+    .date {
+      font-size: 2.4rem;
+    }
+  }
+}
+
+.cell {
+  padding: $cell-padding;
+  outline: 1px solid var(--gray-6);
+}
+
+.time-cell {
+  padding: $cell-padding;
+  position: relative;
+
+  .time {
+    color: var(--gray-12);
+    font-size: 1rem;
+    position: absolute;
+
+    top: 0;
+    right: 8px;
+
+    transform: translate(0, -50%);
+  }
+
+  &:first-child {
+    visibility: hidden;
   }
 }
