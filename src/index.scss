@@ -1,0 +1,21 @@
+@import './reuse';
+$space: 64;
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 62.5%;
+}
+
+body {
+  font-size: 1.6rem;
+}
+
+@while $space >=0 {
+  @include spacing($space);
+  $space: $space - 2;
+}
