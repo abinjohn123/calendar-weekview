@@ -1,0 +1,25 @@
+@import './reuse';
+@import '@radix-ui/colors/gray.css';
+@import '@radix-ui/colors/blue.css';
+
+.calendar-grid {
+  display: grid;
+  grid-template-columns: minmax(20px, auto) repeat(7, 1fr);
+}
+
+.calendar-header {
+  border-bottom: 1px solid var(--gray-8);
+}
+
+.change-week {
+  @extend .d-flex;
+  padding: 6px;
+  border-radius: 100px;
+
+  transition: background-color 0.3s;
+  user-select: none;
+
+  &:hover {
+    background-color: var(--blue-3);
+  }
+}

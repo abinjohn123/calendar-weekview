@@ -22,6 +22,9 @@
   }
 
   // padding
+  .p#{$space} {
+    padding: #{$space}px;
+  }
   .pt#{$space} {
     padding-top: #{$space}px;
   }
@@ -42,4 +45,29 @@
     padding-top: #{$space}px;
     padding-bottom: #{$space}px;
   }
+
+  .gap#{$space} {
+    gap: #{$space}px;
+  }
+}
+
+// Helpers
+.d-flex {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.d-flex-c-s {
+  @extend .d-flex;
+  justify-content: space-between;
+}
+
+.d-flex-c-start {
+  @extend .d-flex;
+  justify-content: flex-start;
+}
+
+.cur-p {
+  cursor: pointer;
 }
