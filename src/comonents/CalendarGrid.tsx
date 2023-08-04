@@ -7,12 +7,15 @@ interface WeekDayProps {
   date: number;
 }
 
-const TIMES = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
 const DAYS = ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'];
 const timeRows: string[] = [];
 
 ['AM', 'PM'].forEach((type) => {
-  for (const time of TIMES) timeRows.push(`${time} ${type}`);
+  for (let i = 0; i < 13; ++i) {
+    if (type === 'PM' && i === 12) continue;
+
+    timeRows.push(`${i} ${type}`);
+  }
 });
 
 const WeekDay = ({ day, date }: WeekDayProps) => {
