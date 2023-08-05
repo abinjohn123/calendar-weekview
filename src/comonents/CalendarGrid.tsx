@@ -1,3 +1,4 @@
+import { useEffect, UIEvent } from 'react';
 import cx from 'classnames';
 
 interface CalendarGridProps {
@@ -24,6 +25,18 @@ const timeRows: string[] = [];
   }
 });
 
+const handleHeaderScroll = (e: UIEvent<HTMLDivElement>): void => {
+  const gridEl = document.getElementById('calendar-grid');
+  if (gridEl)
+    gridEl.scrollLeft = (e.target as HTMLInputElement).scrollLeft ?? 0;
+};
+
+const handleGridScroll = (e: UIEvent<HTMLDivElement>): void => {
+  const headerEl = document.getElementById('calendar-header');
+  if (headerEl)
+    headerEl.scrollLeft = (e.target as HTMLInputElement).scrollLeft ?? 0;
+};
+
 const WeekDay = ({ day, date, isToday }: WeekDayProps) => {
   return (
     <div className={cx('weekday py16 px8', { today: isToday })}>
@@ -48,7 +61,11 @@ const CalendarGrid = ({ week }: CalendarGridProps) => {
     <div className="calendar-container">
       <div className="calendar-grid-spacing">
         <div className="empty"></div>
-        <div className="grid-header scrollable-x">
+        <div
+          className="grid-header scrollable-x"
+          id="calendar-header"
+          onScroll={handleHeaderScroll}
+        >
           {DAYS.map((day, dayIndex) => (
             <WeekDay
               key={dayIndex}
@@ -69,7 +86,11 @@ const CalendarGrid = ({ week }: CalendarGridProps) => {
             </div>
           ))}
         </div>
-        <main className="scrollable-x">
+        <main
+          className="scrollable-x"
+          id="calendar-grid"
+          onScroll={handleGridScroll}
+        >
           {timeRows.map((_, index) => (
             <EachRow key={index} />
           ))}
