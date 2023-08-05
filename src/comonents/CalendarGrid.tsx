@@ -14,8 +14,11 @@ const DAYS = ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'];
 const timeRows: string[] = [];
 
 ['AM', 'PM'].forEach((type) => {
-  for (let i = 0; i < 13; ++i) {
-    if (type === 'PM' && i === 12) continue;
+  for (let i = 0; i < 12; ++i) {
+    if (i === 0) {
+      timeRows.push(`12 ${type}`);
+      continue;
+    }
 
     timeRows.push(`${i} ${type}`);
   }
