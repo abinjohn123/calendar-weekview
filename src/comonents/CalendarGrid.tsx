@@ -62,7 +62,7 @@ const CalendarGrid = ({ week }: CalendarGridProps) => {
         </div>
       </div>
       <div className="calendar-grid-spacing scrollable-y">
-        <div className="">
+        <div className="sidebar">
           {timeRows.map((time, index) => (
             <div className="time-cell" key={index}>
               <span className="time">{time}</span>

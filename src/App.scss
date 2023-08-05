@@ -4,6 +4,7 @@
 @import '@radix-ui/colors/blue.css';
 
 $cell-padding: 24px;
+$border-color: var(--gray-7);
 
 .calendar-weekdays-spacing {
   display: grid;
@@ -79,7 +80,7 @@ $cell-padding: 24px;
     font-weight: 500;
     color: var(--gray-9);
     gap: 4px;
-    border-bottom: 1px solid var(--gray-6);
+    border-bottom: 1px solid $border-color;
 
     .day {
       font-size: 1.2rem;
@@ -107,22 +108,40 @@ $cell-padding: 24px;
 
 .cell {
   padding: $cell-padding;
-  outline: 1px solid var(--gray-6);
+
+  border: 1px solid $border-color;
+  border-left: none;
+  border-top: none;
+}
+
+.sidebar {
+  border-right: 1px solid $border-color;
 }
 
 .time-cell {
   padding: $cell-padding;
   position: relative;
+  border-bottom: 1px solid #fff;
 
   .time {
     color: var(--gray-12);
     font-size: 1rem;
     position: absolute;
+    @extend .d-flex;
+    gap: 8px;
 
     top: 0;
-    right: 8px;
+    right: 0;
 
     transform: translate(0, -50%);
+
+    &::after {
+      content: '';
+      display: block;
+      width: 10px;
+      height: 1px;
+      border-top: 1px solid $border-color;
+    }
   }
 
   &:first-child {
