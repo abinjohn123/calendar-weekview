@@ -1,3 +1,5 @@
+import cx from 'classnames';
+
 interface CalendarGridProps {
   week: Date[];
 }
@@ -5,6 +7,7 @@ interface CalendarGridProps {
 interface WeekDayProps {
   day: string;
   date: number;
+  isToday: boolean;
 }
 
 const DAYS = ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'];
@@ -18,11 +21,11 @@ const timeRows: string[] = [];
   }
 });
 
-const WeekDay = ({ day, date }: WeekDayProps) => {
+const WeekDay = ({ day, date, isToday }: WeekDayProps) => {
   return (
-    <div className="weekday py16 px8">
+    <div className={cx('weekday py16 px8', { today: isToday })}>
       <p className="day">{day}</p>
-      <p className="date">{date}</p>
+      <p className="d-flex p8 date">{date}</p>
     </div>
   );
 };
@@ -44,7 +47,14 @@ const CalendarGrid = ({ week }: CalendarGridProps) => {
         <div className="empty"></div>
         <div className="grid-header scrollable-x">
           {DAYS.map((day, dayIndex) => (
-            <WeekDay key={dayIndex} day={day} date={week[dayIndex].getDate()} />
+            <WeekDay
+              key={dayIndex}
+              day={day}
+              date={week[dayIndex].getDate()}
+              isToday={
+                week[dayIndex].toDateString() === new Date().toDateString()
+              }
+            />
           ))}
         </div>
       </div>
