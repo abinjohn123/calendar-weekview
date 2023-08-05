@@ -18,6 +18,8 @@ $border-color: var(--gray-7);
 
 .calendar-header {
   border-bottom: 1px solid var(--gray-8);
+  padding: 16px;
+  font-size: 1.4rem;
 }
 
 .btn--today {
@@ -146,5 +148,12 @@ $border-color: var(--gray-7);
 
   &:first-child {
     visibility: hidden;
+  }
+}
+
+@media screen and (min-width: 768px) {
+  .calendar-header {
+    padding: 16px 64px;
+    font-size: 1.6rem;
   }
 }

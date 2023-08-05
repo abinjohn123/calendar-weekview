@@ -18,6 +18,11 @@ const dateConfigWithYear: Intl.DateTimeFormatOptions = {
   year: 'numeric',
 };
 
+const responsiveConfig = (config: {}): {} => ({
+  ...config,
+  month: window.innerWidth < 768 ? 'short' : 'long',
+});
+
 const getCurrentDate = (): string =>
   Intl.DateTimeFormat('en-US', {
     weekday: 'long',
@@ -38,17 +43,21 @@ const Header = ({ week, setWeek, resetWeek }: HeaderProps) => {
     }
 
     if (firstDay.getFullYear() === lastDay.getFullYear())
-      return `${new Intl.DateTimeFormat('en-US', dateConfigWithoutYear).format(
-        firstDay
-      )} - ${new Intl.DateTimeFormat('en-US', dateConfigWithYear).format(
-        lastDay
-      )}`;
+      return `${new Intl.DateTimeFormat(
+        'en-US',
+        responsiveConfig(dateConfigWithoutYear)
+      ).format(firstDay)} - ${new Intl.DateTimeFormat(
+        'en-US',
+        responsiveConfig(dateConfigWithYear)
+      ).format(lastDay)}`;
 
-    return `${new Intl.DateTimeFormat('en-US', dateConfigWithYear).format(
-      firstDay
-    )} - ${new Intl.DateTimeFormat('en-US', dateConfigWithYear).format(
-      lastDay
-    )}`;
+    return `${new Intl.DateTimeFormat(
+      'en-US',
+      responsiveConfig(dateConfigWithYear)
+    ).format(firstDay)} - ${new Intl.DateTimeFormat(
+      'en-US',
+      responsiveConfig(dateConfigWithYear)
+    ).format(lastDay)}`;
   };
 
   const handleWeekChange = (type: number): void =>
@@ -57,7 +66,7 @@ const Header = ({ week, setWeek, resetWeek }: HeaderProps) => {
     );
 
   return (
-    <div className="d-flex-c-start py16 px64 gap18 calendar-header">
+    <div className="d-flex-c-start gap18 calendar-header">
       <CustomTooltip title={getCurrentDate()}>
         <button
           className="btn cur-p px12 py12 btn--today"
