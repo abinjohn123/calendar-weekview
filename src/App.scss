@@ -1,5 +1,6 @@
 @import './reuse';
 @import '@radix-ui/colors/gray.css';
+@import '@radix-ui/colors/slate.css';
 @import '@radix-ui/colors/blue.css';
 
 $cell-padding: 24px;
@@ -16,8 +17,19 @@ $cell-padding: 24px;
 
 .calendar-header {
   border-bottom: 1px solid var(--gray-8);
-  padding: 16px;
-  padding-left: 64px;
+}
+
+.btn--today {
+  background-color: #fff;
+  border: 1px solid var(--gray-8);
+  color: var(--slate-12);
+  border-radius: 4px;
+  transition: background-color 0.2s;
+  font-weight: 600;
+
+  &:hover {
+    background-color: var(--gray-3);
+  }
 }
 
 .change-week {

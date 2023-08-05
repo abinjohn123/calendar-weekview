@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useMemo } from 'react';
 import './App.scss';
 
 import Header from './comonents/Header';
@@ -22,7 +22,7 @@ function App() {
 
   return (
     <>
-      <Header week={week} setWeek={setWeek} />
+      <Header week={week} setWeek={setWeek} resetWeek={getCurrentWeek} />
       <CalendarGrid week={week} />
     </>
   );

@@ -6,6 +6,7 @@ import { LeftChevronIcon, RightChevronIcon } from './svg/svg';
 interface HeaderProps {
   week: Date[];
   setWeek: Dispatch<SetStateAction<Date[]>>;
+  resetWeek: () => Date[];
 }
 
 const dateConfigWithoutYear: Intl.DateTimeFormatOptions = {
@@ -17,7 +18,14 @@ const dateConfigWithYear: Intl.DateTimeFormatOptions = {
   year: 'numeric',
 };
 
-const Header = ({ week, setWeek }: HeaderProps) => {
+const getCurrentDate = (): string =>
+  Intl.DateTimeFormat('en-US', {
+    weekday: 'long',
+    month: 'long',
+    day: 'numeric',
+  }).format(new Date());
+
+const Header = ({ week, setWeek, resetWeek }: HeaderProps) => {
   const [firstDay, lastDay] = [week[0], week[6]];
 
   const getMonth = (): string => {
@@ -49,17 +57,33 @@ const Header = ({ week, setWeek }: HeaderProps) => {
     );
 
   return (
-    <div className="d-flex-c-start gap6 calendar-header">
-      <CustomTooltip title="Previous week">
-        <div className="change-week cur-p" onClick={() => handleWeekChange(-1)}>
-          <LeftChevronIcon />
-        </div>
+    <div className="d-flex-c-start py16 px64 gap18 calendar-header">
+      <CustomTooltip title={getCurrentDate()}>
+        <button
+          className="btn cur-p px12 py12 btn--today"
+          onClick={() => setWeek(resetWeek())}
+        >
+          Today
+        </button>
       </CustomTooltip>
-      <CustomTooltip title="Next week">
-        <div className="change-week cur-p" onClick={() => handleWeekChange(1)}>
-          <RightChevronIcon />
-        </div>
-      </CustomTooltip>
+      <div className="d-flex gap4">
+        <CustomTooltip title="Previous week">
+          <div
+            className="change-week cur-p"
+            onClick={() => handleWeekChange(-1)}
+          >
+            <LeftChevronIcon />
+          </div>
+        </CustomTooltip>
+        <CustomTooltip title="Next week">
+          <div
+            className="change-week cur-p"
+            onClick={() => handleWeekChange(1)}
+          >
+            <RightChevronIcon />
+          </div>
+        </CustomTooltip>
+      </div>
       <p className="month">{getMonth()}</p>
     </div>
   );

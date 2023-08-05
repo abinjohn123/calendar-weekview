@@ -16,6 +16,7 @@ html {
 body {
   font-size: 1.6rem;
   font-family: 'inter', sans-serif;
+  color: var(--gray-12);
 }
 
 @while $space >=0 {
@@ -31,4 +32,10 @@ body,
 #root {
   display: flex;
   flex-direction: column;
+}
+
+.btn {
+  border: none;
+  outline: none;
+  font-family: 'Inter', sans-serif;
 }
