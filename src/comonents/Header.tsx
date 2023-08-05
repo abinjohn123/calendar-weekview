@@ -1,5 +1,6 @@
 import { Dispatch, SetStateAction } from 'react';
 
+import CustomTooltip from './CustomTooltip';
 import { LeftChevronIcon, RightChevronIcon } from './svg/svg';
 
 interface HeaderProps {
@@ -48,13 +49,17 @@ const Header = ({ week, setWeek }: HeaderProps) => {
     );
 
   return (
-    <div className="p16 d-flex-c-start gap8 calendar-header">
-      <div className="change-week cur-p" onClick={() => handleWeekChange(-1)}>
-        <LeftChevronIcon />
-      </div>
-      <div className="change-week cur-p" onClick={() => handleWeekChange(1)}>
-        <RightChevronIcon />
-      </div>
+    <div className="d-flex-c-start gap6 calendar-header">
+      <CustomTooltip title="Previous week">
+        <div className="change-week cur-p" onClick={() => handleWeekChange(-1)}>
+          <LeftChevronIcon />
+        </div>
+      </CustomTooltip>
+      <CustomTooltip title="Next week">
+        <div className="change-week cur-p" onClick={() => handleWeekChange(1)}>
+          <RightChevronIcon />
+        </div>
+      </CustomTooltip>
       <p className="month">{getMonth()}</p>
     </div>
   );
