@@ -1,5 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
+import * as Tooltip from '@radix-ui/react-tooltip';
+
 import './index.scss';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
@@ -9,7 +11,9 @@ const root = ReactDOM.createRoot(
 );
 root.render(
   <React.StrictMode>
-    <App />
+    <Tooltip.Provider skipDelayDuration={300} delayDuration={500}>
+      <App />
+    </Tooltip.Provider>
   </React.StrictMode>
 );
 

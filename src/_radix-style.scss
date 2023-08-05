@@ -1,10 +1,10 @@
-@import '@radix-ui/colors/gray.css';
+@import '@radix-ui/colors/slate.css';
 
 // Tooltip
 @keyframes scaleIn {
   from {
     opacity: 0;
-    transform: scale(0.8);
+    transform: scale(0.7);
   }
   to {
     opacity: 1;
@@ -13,10 +13,12 @@
 }
 
 .TooltipContent {
-  background-color: var(--gray-12);
-  color: var(--gray-8);
   padding: 4px 8px;
   border-radius: 4px;
+  background-color: var(--slate-12);
+  color: var(--gray-8);
   font-size: 1.2rem;
-  animation: scaleIn 70ms ease-in;
+  font-weight: 600;
+
+  animation: scaleIn 90ms ease-in;
 }
