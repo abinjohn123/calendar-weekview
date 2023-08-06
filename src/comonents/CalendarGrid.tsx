@@ -1,5 +1,11 @@
-import { useEffect, UIEvent } from 'react';
+import { UIEvent } from 'react';
 import cx from 'classnames';
+
+const testEvent = {
+  title: 'Big assignment',
+  start: '2023-08-06T04:20:37.233Z',
+  end: '2023-08-06T18:20:37.233Z',
+};
 
 interface CalendarGridProps {
   week: Date[];
@@ -9,6 +15,10 @@ interface WeekDayProps {
   day: string;
   date: number;
   isToday: boolean;
+}
+
+interface EachRowProps {
+  rowIndex: number;
 }
 
 const DAYS = ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'];
@@ -46,12 +56,36 @@ const WeekDay = ({ day, date, isToday }: WeekDayProps) => {
   );
 };
 
-const EachRow = () => {
+const EachRow = ({ rowIndex }: EachRowProps) => {
   return (
     <div className="calendar-weekdays-spacing">
-      {DAYS.map((_, index) => (
-        <div key={index} className="cell"></div>
-      ))}
+      {DAYS.map((_, index) => {
+        const startDate = new Date(testEvent.start);
+        const endDate = new Date(testEvent.end);
+
+        return (
+          <div
+            key={index}
+            className="cell"
+            data-row={rowIndex}
+            data-column={index}
+          >
+            {rowIndex === startDate.getHours() &&
+              index === startDate.getDay() && (
+                <div
+                  className="event"
+                  style={
+                    {
+                      '--height': endDate.getHours() - startDate.getHours() + 1,
+                    } as React.CSSProperties
+                  }
+                >
+                  <p>{testEvent.title}</p>
+                </div>
+              )}
+          </div>
+        );
+      })}
     </div>
   );
 };
@@ -92,7 +126,7 @@ const CalendarGrid = ({ week }: CalendarGridProps) => {
           onScroll={handleGridScroll}
         >
           {timeRows.map((_, index) => (
-            <EachRow key={index} />
+            <EachRow key={index} rowIndex={index} />
           ))}
         </main>
       </div>
