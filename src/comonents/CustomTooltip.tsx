@@ -1,10 +1,5 @@
 import * as Tooltip from '@radix-ui/react-tooltip';
-import { ReactNode } from 'react';
-
-interface CustomTooltipProps {
-  title: string;
-  children: ReactNode;
-}
+import { CustomTooltipProps } from '../interfaces';
 
 const CustomTooltip = ({ title, children }: CustomTooltipProps) => {
   return (

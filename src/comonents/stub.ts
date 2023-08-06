@@ -1,13 +1,8 @@
 import { Dispatch, SetStateAction } from 'react';
 
 import { accessIndexedDB } from '../helpers/indexedDB';
+import { eventObject } from '../interfaces';
 import { getWeekNumber, indexedDBPromise } from '../helpers/utils';
-
-interface eventObject {
-  title: string;
-  start: string;
-  end: string;
-}
 
 const events: eventObject[] = [
   {

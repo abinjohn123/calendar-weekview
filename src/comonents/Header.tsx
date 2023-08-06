@@ -1,13 +1,6 @@
-import { Dispatch, SetStateAction } from 'react';
-
 import CustomTooltip from './CustomTooltip';
+import { HeaderProps } from '../interfaces';
 import { LeftChevronIcon, RightChevronIcon } from './svg/svg';
-
-interface HeaderProps {
-  week: Date[];
-  setWeek: Dispatch<SetStateAction<Date[]>>;
-  resetWeek: () => Date[];
-}
 
 const dateConfigWithoutYear: Intl.DateTimeFormatOptions = {
   month: 'long',

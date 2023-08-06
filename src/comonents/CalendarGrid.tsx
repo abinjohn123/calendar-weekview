@@ -2,33 +2,13 @@ import { UIEvent, useEffect, useState } from 'react';
 import cx from 'classnames';
 
 import { getWeekNumber, indexedDBPromise } from '../helpers/utils';
+import {
+  event,
+  CalendarGridProps,
+  WeekDayProps,
+  EachRowProps,
+} from '../interfaces';
 import { DB_DETAILS, accessIndexedDB } from '../helpers/indexedDB';
-
-interface event {
-  title: string;
-  start: string;
-  end: string;
-  startWeek: number;
-  endWeek: number;
-  id: number;
-}
-
-interface CalendarGridProps {
-  week: Date[];
-  isDBInitializing: boolean;
-}
-
-interface WeekDayProps {
-  day: string;
-  date: number;
-  isToday: boolean;
-}
-
-interface EachRowProps {
-  rowIndex: number;
-  events: event[];
-  currentWeek: number;
-}
 
 const timeConfig: Intl.DateTimeFormatOptions = {
   minute: '2-digit',
