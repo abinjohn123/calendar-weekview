@@ -20,13 +20,14 @@ const getCurrentWeek = () => {
 
 function App() {
   const [week, setWeek] = useState<Date[]>(getCurrentWeek());
+  const [isDBInitializing, setIsDBInitializing] = useState<boolean>(false);
 
-  useEffect(initializeDB, []);
+  useEffect(() => initializeDB(setIsDBInitializing), []);
 
   return (
     <>
       <Header week={week} setWeek={setWeek} resetWeek={getCurrentWeek} />
-      <CalendarGrid week={week} />
+      <CalendarGrid week={week} isDBInitializing={isDBInitializing} />
     </>
   );
 }

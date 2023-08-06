@@ -1,13 +1,8 @@
 import { UIEvent, useEffect, useState } from 'react';
 import cx from 'classnames';
 
-import { DB_DETAILS, getWeekNumber } from './stub';
-
-const testEvent = {
-  title: 'Big assignment',
-  start: '2023-08-06T04:20:37.233Z',
-  end: '2023-08-06T18:20:37.233Z',
-};
+import { getWeekNumber, indexedDBPromise } from '../helpers/utils';
+import { DB_DETAILS, accessIndexedDB } from '../helpers/indexedDB';
 
 interface event {
   title: string;
@@ -20,6 +15,7 @@ interface event {
 
 interface CalendarGridProps {
   week: Date[];
+  isDBInitializing: boolean;
 }
 
 interface WeekDayProps {
@@ -105,18 +101,6 @@ const EachRow = ({ rowIndex, events, currentWeek }: EachRowProps) => {
             : 23
           : 0;
 
-        if (eventOnDate)
-          console.log({
-            title: eventOnDate.title,
-            startHour,
-            endHour,
-            startDate: new Date(eventOnDate.start),
-            endDate: new Date(eventOnDate.end),
-            start: new Date(eventOnDate.start).getDate(),
-            end: new Date(eventOnDate.end).getDate(),
-            currentWeek: getWeekNumber(new Date()),
-          });
-
         return (
           <div
             key={columnIndex}
@@ -160,21 +144,16 @@ const EachRow = ({ rowIndex, events, currentWeek }: EachRowProps) => {
   );
 };
 
-const CalendarGrid = ({ week }: CalendarGridProps) => {
+const CalendarGrid = ({ week, isDBInitializing }: CalendarGridProps) => {
   const [isLoading, setIsLoading] = useState(true);
   const [events, setEvents] = useState<event[]>([]);
   const currentWeek = getWeekNumber(new Date(week[0]));
 
   useEffect(() => {
+    if (isDBInitializing) return;
+
     setIsLoading(true);
-    const request = window.indexedDB.open(DB_DETAILS.NAME, 1);
-
-    request.onerror = (event) => {
-      console.error('An error occured with IndexedDB');
-      console.error(event);
-    };
-
-    request.onsuccess = () => {
+    accessIndexedDB(async (request: IDBOpenDBRequest) => {
       const db = request.result;
       const transaction = db.transaction('events', 'readwrite');
       const store = transaction.objectStore('events');
@@ -185,12 +164,6 @@ const CalendarGrid = ({ week }: CalendarGridProps) => {
       // index query
       const startWeekQuery = startWeekIndex.getAll(currentWeek);
       const endWeekQuery = endWeekIndex.getAll(currentWeek);
-
-      const indexedDBPromise = (request: IDBRequest) =>
-        new Promise((resolve, reject) => {
-          request.onsuccess = () => resolve(request.result);
-          request.onerror = () => reject(request.error);
-        });
 
       // success events
       startWeekQuery.onsuccess = () =>
@@ -212,16 +185,14 @@ const CalendarGrid = ({ week }: CalendarGridProps) => {
             startWeekEvents.every((startEvent) => startEvent.id !== endEvent.id)
           ),
         ];
-
-        console.log(finalEvents);
         setEvents(finalEvents);
       });
 
       // close connection
       transaction.oncomplete = () => db.close();
       setIsLoading(false);
-    };
-  }, [week]);
+    });
+  }, [week, isDBInitializing]);
 
   return (
     <div className="calendar-container">
