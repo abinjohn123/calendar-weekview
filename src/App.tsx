@@ -1,8 +1,9 @@
-import { useState, useMemo } from 'react';
+import { useState, useEffect } from 'react';
 import './App.scss';
 
 import Header from './comonents/Header';
 import CalendarGrid from './comonents/CalendarGrid';
+import { initializeDB } from './comonents/stub';
 
 const getCurrentWeek = () => {
   const currentDate = new Date();
@@ -19,6 +20,8 @@ const getCurrentWeek = () => {
 
 function App() {
   const [week, setWeek] = useState<Date[]>(getCurrentWeek());
+
+  useEffect(initializeDB, []);
 
   return (
     <>
