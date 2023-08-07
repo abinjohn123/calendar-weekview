@@ -23,6 +23,12 @@ const getCurrentDate = (): string =>
     day: 'numeric',
   }).format(new Date());
 
+const addTransition = (toLeft: boolean): void => {
+  const calendarContainerEl = document.querySelector('.calendar-container');
+  calendarContainerEl?.classList.add(toLeft ? 'left' : 'right');
+  setTimeout(() => calendarContainerEl?.classList.remove('left', 'right'), 100);
+};
+
 const Header = ({ week, setWeek, resetWeek }: HeaderProps) => {
   const [firstDay, lastDay] = [week[0], week[6]];
 
@@ -53,17 +59,24 @@ const Header = ({ week, setWeek, resetWeek }: HeaderProps) => {
     ).format(lastDay)}`;
   };
 
-  const handleWeekChange = (type: number): void =>
+  const handleWeekChange = (type: number): void => {
     setWeek(
       week.map((date) => new Date(date.setDate(date.getDate() + type * 7)))
     );
+    addTransition(type === 1);
+  };
 
   return (
     <div className="d-flex-c-start gap18 calendar-header">
       <CustomTooltip title={getCurrentDate()}>
         <button
           className="btn cur-p px12 py12 btn--today"
-          onClick={() => setWeek(resetWeek())}
+          onClick={() =>
+            setWeek((week) => {
+              addTransition(new Date(week[0]) < new Date());
+              return resetWeek();
+            })
+          }
         >
           Today
         </button>

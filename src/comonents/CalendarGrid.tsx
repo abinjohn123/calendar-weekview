@@ -38,7 +38,6 @@ const handleGridScroll = (e: UIEvent<HTMLDivElement>): void => {
 };
 
 const WeekDay = ({ day, date, isToday, isFuture }: WeekDayProps) => {
-  console.log(isFuture);
   return (
     <div className={cx('weekday py16 px8', { today: isToday })}>
       <p className="day">{day}</p>
