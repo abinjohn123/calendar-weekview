@@ -37,10 +37,9 @@ export const initializeDB = (
     const transaction = db.transaction('events', 'readwrite');
     const store = transaction.objectStore('events');
 
-    // check if data exists in db
     const isDataExisting = await indexedDBPromise(store.getAll());
 
-    // add data to databse
+    // add data to database if needed
     if (!(isDataExisting as eventObject[]).length) {
       events.forEach((event, index) =>
         store.put({
