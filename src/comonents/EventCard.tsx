@@ -1,8 +1,8 @@
-import React, { forwardRef } from 'react';
+import React, { RefCallback } from 'react';
 import { useMediaQuery } from 'react-responsive';
 import * as Dialog from '@radix-ui/react-dialog';
 import * as Popover from '@radix-ui/react-popover';
-import { EventCardProps } from '../interfaces';
+import { EventCardProps, event, eventObject } from '../interfaces';
 import { getWeekNumber } from '../helpers/utils';
 import { BellIcon, CalendarIcon, CrossIcon } from './svg/svg';
 
@@ -27,38 +27,75 @@ const getDateString = (date: Date): string => {
   ).toLowerCase()}`;
 };
 
+const TriggerContent = React.forwardRef<HTMLDivElement, EventCardProps>(
+  (props, ref) => {
+    const { event, columnIndex, currentWeek, endHour, startHour } = props;
+    return (
+      <div
+        className="event"
+        style={
+          {
+            '--height':
+              endHour -
+              (new Date(event.start).getDay() === columnIndex - 1 ||
+              getWeekNumber(new Date(event.start)) === currentWeek - 1
+                ? 0
+                : startHour) +
+              1,
+          } as React.CSSProperties
+        }
+        ref={ref}
+        {...props}
+      >
+        <p>{event.title}</p>
+        <p>
+          {new Intl.DateTimeFormat('en-US', timeConfig).format(
+            new Date(event.start)
+          )}{' '}
+          -{' '}
+          {new Intl.DateTimeFormat('en-US', timeConfig).format(
+            new Date(event.end)
+          )}
+        </p>
+      </div>
+    );
+  }
+);
+
+const CardContent = ({ title, start, end }: eventObject) => (
+  <div className="event-dialog-content">
+    <div className="event-row">
+      <div className="event-icon event-color"></div>
+      <div className="mb24">
+        <h3 className="event-title mb4">{title}</h3>
+        <p className="event-date-range">{`${getDateString(
+          new Date(start)
+        )} - ${getDateString(new Date(end))}`}</p>
+      </div>
+    </div>
+    <div className="event-row mb12">
+      <div className="event-icon">
+        <BellIcon />
+      </div>
+      <p className="event-text">30 minutes before</p>
+    </div>
+    <div className="event-row">
+      <div className="event-icon">
+        <CalendarIcon />
+      </div>
+      <p className="event-text">Abin John</p>
+    </div>
+  </div>
+);
+
 const EventCard = (props: EventCardProps) => {
-  const { event, startHour, endHour, columnIndex, currentWeek } = props;
+  const { event } = props;
   const isMobile = useMediaQuery({ query: '(max-width: 768px)' });
 
   return !isMobile ? (
     <Popover.Root modal={true}>
       <Popover.Trigger asChild>
-        <div
-          className="event"
-          style={
-            {
-              '--height':
-                endHour -
-                (new Date(event.start).getDay() === columnIndex - 1 ||
-                getWeekNumber(new Date(event.start)) === currentWeek - 1
-                  ? 0
-                  : startHour) +
-                1,
-            } as React.CSSProperties
-          }
-        >
-          <p>{event.title}</p>
-          <p>
-            {new Intl.DateTimeFormat('en-US', timeConfig).format(
-              new Date(event.start)
-            )}
-            -{' '}
-            {new Intl.DateTimeFormat('en-US', timeConfig).format(
-              new Date(event.end)
-            )}
-          </p>
-        </div>
+        <TriggerContent {...props} />
       </Popover.Trigger>
       <Popover.Portal
         container={document.getElementById('scrollable-grid-container')}
@@ -71,60 +108,14 @@ const EventCard = (props: EventCardProps) => {
               </button>
             </Popover.Close>
           </div>
-          <div className="event-dialog-content">
-            <div className="event-row">
-              <div className="event-icon event-color"></div>
-              <div className="mb24">
-                <h3 className="event-title mb4">{event.title}</h3>
-                <p className="event-date-range">{`${getDateString(
-                  new Date(event.start)
-                )} - ${getDateString(new Date(event.end))}`}</p>
-              </div>
-            </div>
-            <div className="event-row mb12">
-              <div className="event-icon">
-                <BellIcon />
-              </div>
-              <p className="event-text">30 minutes before</p>
-            </div>
-            <div className="event-row">
-              <div className="event-icon">
-                <CalendarIcon />
-              </div>
-              <p className="event-text">Abin John</p>
-            </div>
-          </div>
+          <CardContent {...event} />
         </Popover.Content>
       </Popover.Portal>
     </Popover.Root>
   ) : (
     <Dialog.Root>
       <Dialog.Trigger asChild>
-        <div
-          className="event"
-          style={
-            {
-              '--height':
-                endHour -
-                (new Date(event.start).getDay() === columnIndex - 1 ||
-                getWeekNumber(new Date(event.start)) === currentWeek - 1
-                  ? 0
-                  : startHour) +
-                1,
-            } as React.CSSProperties
-          }
-        >
-          <p>{event.title}</p>
-          <p>
-            {new Intl.DateTimeFormat('en-US', timeConfig).format(
-              new Date(event.start)
-            )}
-            -{' '}
-            {new Intl.DateTimeFormat('en-US', timeConfig).format(
-              new Date(event.end)
-            )}
-          </p>
-        </div>
+        <TriggerContent {...props} />
       </Dialog.Trigger>
       <Dialog.Portal>
         <Dialog.Overlay className="DialogOverlay" />
@@ -136,29 +127,7 @@ const EventCard = (props: EventCardProps) => {
               </button>
             </Dialog.Close>
           </div>
-          <div className="event-dialog-content">
-            <div className="event-row">
-              <div className="event-icon event-color"></div>
-              <div className="mb24">
-                <h3 className="event-title mb4">{event.title}</h3>
-                <p className="event-date-range">{`${getDateString(
-                  new Date(event.start)
-                )} - ${getDateString(new Date(event.end))}`}</p>
-              </div>
-            </div>
-            <div className="event-row mb12">
-              <div className="event-icon">
-                <BellIcon />
-              </div>
-              <p className="event-text">30 minutes before</p>
-            </div>
-            <div className="event-row">
-              <div className="event-icon">
-                <CalendarIcon />
-              </div>
-              <p className="event-text">Abin John</p>
-            </div>
-          </div>
+          <CardContent {...event} />
         </Dialog.Content>
       </Dialog.Portal>
     </Dialog.Root>
