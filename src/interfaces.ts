@@ -23,6 +23,7 @@ export interface WeekDayProps {
   day: string;
   date: number;
   isToday: boolean;
+  isFuture: boolean;
 }
 
 export interface EachRowProps {

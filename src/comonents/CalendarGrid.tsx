@@ -37,11 +37,12 @@ const handleGridScroll = (e: UIEvent<HTMLDivElement>): void => {
     headerEl.scrollLeft = (e.target as HTMLInputElement).scrollLeft ?? 0;
 };
 
-const WeekDay = ({ day, date, isToday }: WeekDayProps) => {
+const WeekDay = ({ day, date, isToday, isFuture }: WeekDayProps) => {
+  console.log(isFuture);
   return (
     <div className={cx('weekday py16 px8', { today: isToday })}>
       <p className="day">{day}</p>
-      <p className="d-flex p8 date">{date}</p>
+      <p className={cx('d-flex p8 date', { future: isFuture })}>{date}</p>
     </div>
   );
 };
@@ -166,6 +167,7 @@ const CalendarGrid = ({ week, isDBInitializing }: CalendarGridProps) => {
               isToday={
                 week[dayIndex].toDateString() === new Date().toDateString()
               }
+              isFuture={week[dayIndex] > new Date()}
             />
           ))}
         </div>
