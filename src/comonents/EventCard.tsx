@@ -3,7 +3,6 @@ import { useMediaQuery } from 'react-responsive';
 import * as Dialog from '@radix-ui/react-dialog';
 import * as Popover from '@radix-ui/react-popover';
 import { EventCardProps, eventObject } from '../interfaces';
-import { getWeekNumber } from '../helpers/utils';
 import { BellIcon, CalendarIcon, CrossIcon } from './svg/svg';
 
 const timeConfig: Intl.DateTimeFormatOptions = {
@@ -29,15 +28,14 @@ const getDateString = (date: Date): string => {
 
 const TriggerContent = React.forwardRef<HTMLDivElement, EventCardProps>(
   (props, ref) => {
-    const { event, columnIndex, currentWeek, endHour, startHour } = props;
+    const { event, columnIndex, endHour, startHour } = props;
     const isEventStartingOnDate =
-      new Date(event.start).getDay() === columnIndex - 1 ||
-      getWeekNumber(new Date(event.start)) === currentWeek - 1;
+      new Date(event.start).getDay() === columnIndex;
     const isEventEndingOnDate = new Date(event.end).getDay() === columnIndex;
 
     const startOffset = isEventStartingOnDate
-      ? 0
-      : new Date(event.start).getMinutes();
+      ? new Date(event.start).getMinutes()
+      : 0;
     const endOffset = isEventEndingOnDate
       ? new Date(event.end).getMinutes()
       : 60;
@@ -47,7 +45,7 @@ const TriggerContent = React.forwardRef<HTMLDivElement, EventCardProps>(
         className="event"
         style={
           {
-            '--height': endHour - (isEventStartingOnDate ? 0 : startHour),
+            '--height': endHour - (isEventStartingOnDate ? startHour : 0),
             '--start-offset': startOffset,
             '--end-offset': endOffset,
           } as React.CSSProperties
