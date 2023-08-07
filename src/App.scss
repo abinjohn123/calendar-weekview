@@ -190,15 +190,17 @@ $border-color: var(--gray-7);
 }
 
 .event {
+  $startOffset: calc($cell-padding / 30 * var(--start-offset));
+  $endOffset: calc($cell-padding / 30 * var(--end-offset));
   position: absolute;
-  top: 2px;
+  top: $startOffset;
   left: 0;
   z-index: 2;
   cursor: pointer;
   user-select: none;
 
   width: calc(100% - 12px);
-  height: calc(100% * var(--height));
+  height: calc(100% * var(--height) + $endOffset - $startOffset + 6px);
   border-radius: 4px;
   padding: 4px;
   background-color: var(--teal-10);

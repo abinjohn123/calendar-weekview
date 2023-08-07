@@ -30,18 +30,26 @@ const getDateString = (date: Date): string => {
 const TriggerContent = React.forwardRef<HTMLDivElement, EventCardProps>(
   (props, ref) => {
     const { event, columnIndex, currentWeek, endHour, startHour } = props;
+    const isEventStartingOnDate =
+      new Date(event.start).getDay() === columnIndex - 1 ||
+      getWeekNumber(new Date(event.start)) === currentWeek - 1;
+    const isEventEndingOnDate = new Date(event.end).getDay() === columnIndex;
+
+    const startOffset = isEventStartingOnDate
+      ? 0
+      : new Date(event.start).getMinutes();
+    const endOffset = isEventEndingOnDate
+      ? new Date(event.end).getMinutes()
+      : 60;
+
     return (
       <div
         className="event"
         style={
           {
-            '--height':
-              endHour -
-              (new Date(event.start).getDay() === columnIndex - 1 ||
-              getWeekNumber(new Date(event.start)) === currentWeek - 1
-                ? 0
-                : startHour) +
-              1,
+            '--height': endHour - (isEventStartingOnDate ? 0 : startHour),
+            '--start-offset': startOffset,
+            '--end-offset': endOffset,
           } as React.CSSProperties
         }
         ref={ref}
