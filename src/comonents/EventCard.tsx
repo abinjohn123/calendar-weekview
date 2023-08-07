@@ -1,8 +1,8 @@
-import React, { RefCallback } from 'react';
+import React from 'react';
 import { useMediaQuery } from 'react-responsive';
 import * as Dialog from '@radix-ui/react-dialog';
 import * as Popover from '@radix-ui/react-popover';
-import { EventCardProps, event, eventObject } from '../interfaces';
+import { EventCardProps, eventObject } from '../interfaces';
 import { getWeekNumber } from '../helpers/utils';
 import { BellIcon, CalendarIcon, CrossIcon } from './svg/svg';
 
