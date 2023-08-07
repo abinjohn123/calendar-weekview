@@ -121,11 +121,6 @@ const CalendarGrid = ({ week, isDBInitializing }: CalendarGridProps) => {
       const endWeekQuery = endWeekIndex.getAll(currentWeek);
 
       // success events
-      startWeekQuery.onsuccess = () =>
-        console.log('startWeekQuery', startWeekQuery.result);
-      endWeekQuery.onsuccess = () =>
-        console.log('endWeekQuery', endWeekQuery.result);
-
       Promise.all([
         indexedDBPromise(startWeekQuery),
         indexedDBPromise(endWeekQuery),
