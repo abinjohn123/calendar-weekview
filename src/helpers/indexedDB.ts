@@ -1,5 +1,5 @@
 export const DB_DETAILS = {
-  NAME: 'test-db-2',
+  NAME: 'calendar-events-db',
   START_WEEK_INDEX: 'start_week',
   END_WEEK_INDEX: 'end_week',
 };

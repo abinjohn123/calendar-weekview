@@ -6,14 +6,14 @@ import { getWeekNumber, indexedDBPromise } from '../helpers/utils';
 
 const events: eventObject[] = [
   {
-    title: 'Task 1',
+    title: 'Meeting with John Doe',
     start: '2023-08-06T04:20:37.233Z',
-    end: '2023-08-06T10:20:37.233Z',
+    end: '2023-08-06T09:30:00.233Z',
   },
   {
-    title: 'Task 2',
-    start: '2023-08-09T07:20:37.233Z',
-    end: '2023-08-10T05:20:37.233Z',
+    title: 'Last9 Assignment',
+    start: '2023-08-09T07:00:37.233Z',
+    end: '2023-08-10T04:45:00.233Z',
   },
   {
     title: 'Task 3',
@@ -21,9 +21,9 @@ const events: eventObject[] = [
     end: '2023-08-13T05:15:37.233Z',
   },
   {
-    title: 'Task 4',
-    start: '2023-08-04T02:20:37.233Z',
-    end: '2023-08-04T12:20:37.233Z',
+    title: 'House cleaning',
+    start: '2023-08-04T04:50:37.233Z',
+    end: '2023-08-04T12:20:15.233Z',
   },
 ];
 
