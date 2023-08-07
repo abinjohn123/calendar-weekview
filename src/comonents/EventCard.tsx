@@ -51,8 +51,8 @@ const TriggerContent = React.forwardRef<HTMLDivElement, EventCardProps>(
         <p>
           {new Intl.DateTimeFormat('en-US', timeConfig).format(
             new Date(event.start)
-          )}{' '}
-          -{' '}
+          )}
+          {' - '}
           {new Intl.DateTimeFormat('en-US', timeConfig).format(
             new Date(event.end)
           )}
