@@ -28,7 +28,8 @@ const getDateString = (date: Date): string => {
 
 const TriggerContent = React.forwardRef<HTMLDivElement, EventCardProps>(
   (props, ref) => {
-    const { event, columnIndex, endHour, startHour } = props;
+    const { event, columnIndex, endHour, startHour, currentWeek, ...rest } =
+      props;
     const isEventStartingOnDate =
       new Date(event.start).getDay() === columnIndex;
     const isEventEndingOnDate = new Date(event.end).getDay() === columnIndex;
@@ -51,7 +52,7 @@ const TriggerContent = React.forwardRef<HTMLDivElement, EventCardProps>(
           } as React.CSSProperties
         }
         ref={ref}
-        {...props}
+        {...rest}
       >
         <p>{event.title}</p>
         <p>
