@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import './App.scss';
+import './styles/App.scss';
 
 import Header from './comonents/Header';
 import CalendarGrid from './comonents/CalendarGrid';
