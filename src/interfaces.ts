@@ -1,5 +1,10 @@
 import { ReactNode, Dispatch, SetStateAction } from 'react';
 
+export interface eventObject {
+  title: string;
+  start: string;
+  end: string;
+}
 export interface event {
   title: string;
   start: string;
@@ -37,8 +42,10 @@ export interface HeaderProps {
   resetWeek: () => Date[];
 }
 
-export interface eventObject {
-  title: string;
-  start: string;
-  end: string;
+export interface EventCardProps {
+  event: event;
+  startHour: number;
+  endHour: number;
+  columnIndex: number;
+  currentWeek: number;
 }

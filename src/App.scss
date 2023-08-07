@@ -170,6 +170,55 @@ $border-color: var(--gray-7);
   background-color: var(--teal-10);
   color: var(--teal-2);
   word-break: break-word;
+
+  @extend .d-flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  gap: 8px;
+  font-size: 1.4rem;
+}
+
+.event-dialog-header {
+  @extend .d-flex;
+  justify-content: flex-end;
+  gap: 16px;
+}
+
+.event-dialog-content {
+  font-size: 1.4rem;
+  color: var(--gray-12);
+
+  .event-row {
+    display: grid;
+    grid-template-columns: 20px 1fr;
+    gap: 20px;
+  }
+
+  .event-icon {
+    width: 20px;
+    height: 20px;
+
+    .icon {
+      height: 100%;
+      width: 100%;
+      cursor: default;
+    }
+
+    &.event-color {
+      width: 16px;
+      height: 16px;
+      margin-top: 4px;
+      background-color: var(--teal-10);
+      border-radius: 4px;
+    }
+  }
+
+  .event-title {
+    color: var(--gray-12);
+    font-size: 2.2rem;
+    font-weight: 400;
+  }
 }
 
 @media screen and (min-width: 768px) {

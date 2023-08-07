@@ -9,12 +9,7 @@ import {
   EachRowProps,
 } from '../interfaces';
 import { DB_DETAILS, accessIndexedDB } from '../helpers/indexedDB';
-
-const timeConfig: Intl.DateTimeFormatOptions = {
-  minute: '2-digit',
-  hour: '2-digit',
-  hour12: true,
-};
+import EventCard from './EventCard';
 
 const DAYS = ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'];
 const timeRows: string[] = [];
@@ -68,7 +63,7 @@ const EachRow = ({ rowIndex, events, currentWeek }: EachRowProps) => {
             // event starts on the previous week
             (rowIndex === 0 &&
               getWeekNumber(new Date(event.start)) === currentWeek - 1 &&
-              new Date(event.end).getDay() == columnIndex)
+              new Date(event.end).getDay() === columnIndex)
           );
         });
 
@@ -89,33 +84,13 @@ const EachRow = ({ rowIndex, events, currentWeek }: EachRowProps) => {
             data-column={columnIndex}
           >
             {eventOnDate && (
-              <div
-                className="event"
-                style={
-                  {
-                    '--height':
-                      endHour -
-                      (new Date(eventOnDate.start).getDay() ===
-                        columnIndex - 1 ||
-                      getWeekNumber(new Date(eventOnDate.start)) ===
-                        currentWeek - 1
-                        ? 0
-                        : startHour) +
-                      1,
-                  } as React.CSSProperties
-                }
-              >
-                <p>{eventOnDate.title}</p>
-                <p>
-                  {new Intl.DateTimeFormat('en-US', timeConfig).format(
-                    new Date(eventOnDate.start)
-                  )}
-                  -{' '}
-                  {new Intl.DateTimeFormat('en-US', timeConfig).format(
-                    new Date(eventOnDate.end)
-                  )}
-                </p>
-              </div>
+              <EventCard
+                event={eventOnDate}
+                startHour={startHour}
+                endHour={endHour}
+                columnIndex={columnIndex}
+                currentWeek={currentWeek}
+              />
             )}
           </div>
         );
@@ -172,7 +147,7 @@ const CalendarGrid = ({ week, isDBInitializing }: CalendarGridProps) => {
       transaction.oncomplete = () => db.close();
       setIsLoading(false);
     });
-  }, [week, isDBInitializing]);
+  }, [currentWeek, isDBInitializing]);
 
   return (
     <div className="calendar-container">
@@ -195,7 +170,10 @@ const CalendarGrid = ({ week, isDBInitializing }: CalendarGridProps) => {
           ))}
         </div>
       </div>
-      <div className="calendar-grid-spacing scrollable-y">
+      <div
+        className="calendar-grid-spacing scrollable-y"
+        id="scrollable-grid-container"
+      >
         <div className="sidebar">
           {timeRows.map((time, index) => (
             <div className="time-cell" key={index}>
