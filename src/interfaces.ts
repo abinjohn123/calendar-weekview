@@ -30,6 +30,7 @@ export interface EachRowProps {
   rowIndex: number;
   events: event[];
   currentWeek: number;
+  currentTime: Date;
 }
 
 export interface CustomTooltipProps {

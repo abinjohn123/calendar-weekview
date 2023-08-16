@@ -257,6 +257,28 @@ $border-color: var(--gray-7);
   }
 }
 
+.current-time-line {
+  position: absolute;
+  top: calc($cell-padding / 30 * var(--offset));
+  left: 0;
+  height: 2px;
+  width: 100%;
+  background-color: rgb(234, 67, 53);
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+
+  &::before {
+    content: '';
+    display: block;
+    width: 12px;
+    height: 12px;
+    border-radius: 1000px;
+    background-color: rgb(234, 67, 53);
+    transform: translateX(-50%);
+  }
+}
+
 @media screen and (min-width: 768px) {
   .calendar-header {
     padding: 16px 16px 16px 80px;

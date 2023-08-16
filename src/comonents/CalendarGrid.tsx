@@ -46,7 +46,15 @@ const WeekDay = ({ day, date, isToday, isFuture }: WeekDayProps) => {
   );
 };
 
-const EachRow = ({ rowIndex, events, currentWeek }: EachRowProps) => {
+const EachRow = ({
+  rowIndex,
+  events,
+  currentWeek,
+  currentTime,
+}: EachRowProps) => {
+  const currentHour = currentTime.getHours();
+  const currentDay = currentTime.getDay();
+  const timeOffset = currentTime.getMinutes();
   return (
     <div className="calendar-weekdays-spacing">
       {DAYS.map((_, columnIndex) => {
@@ -76,6 +84,11 @@ const EachRow = ({ rowIndex, events, currentWeek }: EachRowProps) => {
             : 23
           : 0;
 
+        const showTimeIndicator =
+          getWeekNumber(new Date()) === currentWeek &&
+          currentDay === columnIndex &&
+          currentHour === rowIndex;
+
         return (
           <div
             key={columnIndex}
@@ -92,6 +105,12 @@ const EachRow = ({ rowIndex, events, currentWeek }: EachRowProps) => {
                 currentWeek={currentWeek}
               />
             )}
+            {showTimeIndicator && (
+              <div
+                className="current-time-line"
+                style={{ '--offset': timeOffset } as React.CSSProperties}
+              ></div>
+            )}
           </div>
         );
       })}
@@ -103,6 +122,7 @@ const CalendarGrid = ({ week, isDBInitializing }: CalendarGridProps) => {
   const [isLoading, setIsLoading] = useState(true);
   const [events, setEvents] = useState<event[]>([]);
   const currentWeek = getWeekNumber(new Date(week[0]));
+  const [currentTime, setCurrentTime] = useState(new Date());
 
   useEffect(() => {
     if (isDBInitializing) return;
@@ -143,6 +163,11 @@ const CalendarGrid = ({ week, isDBInitializing }: CalendarGridProps) => {
       setIsLoading(false);
     });
   }, [currentWeek, isDBInitializing]);
+
+  useEffect(() => {
+    const intervalId = setInterval(() => setCurrentTime(new Date()), 60000);
+    return () => clearInterval(intervalId);
+  }, []);
 
   return (
     <div className="calendar-container">
@@ -189,6 +214,7 @@ const CalendarGrid = ({ week, isDBInitializing }: CalendarGridProps) => {
                 rowIndex={index}
                 events={events}
                 currentWeek={currentWeek}
+                currentTime={currentTime}
               />
             ))}
           </main>
