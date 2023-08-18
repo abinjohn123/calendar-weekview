@@ -1,4 +1,4 @@
-# Last9 Front-end Assignment - Calendar Week View
+# Calendar Week View
 
 Implementation of Google Calendar's week view. [Live App](https://calendar-week-view.netlify.app/)
 
@@ -11,9 +11,8 @@ Implementation of Google Calendar's week view. [Live App](https://calendar-week-
 
 ## Features
 
-1. Toggle between weeks
-2. Animations for week toggles
+1. Toggle between weeks and skip to current week
+2. Animations for week toggles + Fully responsive
 3. Popup card for the events on click
-4. Fully responsive
-5. Events that are spread across two days are split at the 12:00 a.m. mark
-6. Event cards are offset based on the minute values of the start and end dates
+4. Events that are spread across two days are split at the 12:00 a.m. mark
+5. Start and end of the Event cards are accurate to the minute
