@@ -259,6 +259,7 @@ $border-color: var(--gray-7);
 
 .current-time-line {
   position: absolute;
+  z-index: 3;
   top: calc($cell-padding / 30 * var(--offset));
   left: 0;
   height: 2px;
