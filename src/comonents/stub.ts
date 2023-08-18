@@ -7,23 +7,23 @@ import { getWeekNumber, indexedDBPromise } from '../helpers/utils';
 const events: eventObject[] = [
   {
     title: 'Meeting with John Doe',
-    start: '2023-08-06T04:20:37.233Z',
-    end: '2023-08-06T09:30:00.233Z',
+    start: '2023-08-13T04:20:37.233Z',
+    end: '2023-08-13T09:30:00.233Z',
   },
   {
-    title: 'Last9 Assignment',
-    start: '2023-08-09T07:00:37.233Z',
-    end: '2023-08-10T04:45:00.233Z',
+    title: 'Calendar Assignment',
+    start: '2023-08-16T07:00:37.233Z',
+    end: '2023-08-17T04:45:00.233Z',
   },
   {
-    title: 'Task 3',
-    start: '2023-08-12T15:20:37.233Z',
-    end: '2023-08-13T05:15:37.233Z',
+    title: 'Meeting with Vaasu',
+    start: '2023-08-19T15:20:37.233Z',
+    end: '2023-08-20T05:15:37.233Z',
   },
   {
     title: 'House cleaning',
-    start: '2023-08-04T04:50:37.233Z',
-    end: '2023-08-04T12:20:15.233Z',
+    start: '2023-08-11T04:50:37.233Z',
+    end: '2023-08-11T12:20:15.233Z',
   },
 ];
 
